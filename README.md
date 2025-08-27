@@ -1,6 +1,6 @@
-# Welcome to your Expo app 👋
+# Welcome to dikiHealth 
 
-This is a Algorand Blockchain and IoT powered health App.
+This is a Algorand Blockchain and IoT powered healthcare App.
 
 ## Features
 
