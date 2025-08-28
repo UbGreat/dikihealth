@@ -1,5 +1,4 @@
 // app/createAsset.tsx
-import { Video } from "expo-av"
 import * as ImagePicker from "expo-image-picker"
 import React, { useState } from "react"
 import {
@@ -134,14 +133,14 @@ export default function CreateAssetScreen() {
         <Image source={{ uri: mediaUri }} style={styles.previewImage} />
       )}
 
-      {mediaUri && mediaType === "video" && (
+      {/* {mediaUri && mediaType === "video" && (
         <Video
           source={{ uri: mediaUri }}
           style={styles.previewVideo}
           useNativeControls
           resizeMode="contain"
         />
-      )}
+      )} */}
 
       {/* Submit Button */}
       <TouchableOpacity style={styles.createBtn} onPress={handleCreateAsset}>
