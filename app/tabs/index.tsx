@@ -68,7 +68,7 @@ export default function Home() {
           <FeatureCard
             title="Healthcare Assets (ASA)"
             subtitle="Invest • Lease • Track"
-            onPress={() => router.push("/tabs/assets/index")}
+            onPress={() => router.push("/tabs/assets")}
             leftIcon={<MaterialCommunityIcons name="cube-outline" size={28} color="#2563eb" />}
             testID="asa-card"
           />
