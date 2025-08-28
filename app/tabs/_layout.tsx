@@ -36,6 +36,7 @@ export default function TabLayout() {
           ),
         }}
       />
+    
       <Tabs.Screen
         name="emergency"
         options={{
@@ -45,6 +46,8 @@ export default function TabLayout() {
           ),
         }}
       />
+           
+      
       <Tabs.Screen
         name="wallet"
         options={{
@@ -54,10 +57,32 @@ export default function TabLayout() {
           ),
         }}
       />
+      
       <Tabs.Screen
-        name="asset"
+        name="assets"
         options={{
           title: 'Assets',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'information-circle' : 'information-circle-outline'} color={color} size={24}/>
+          ),
+        }}
+      />
+      
+      {/* <Tabs.Screen
+        name="assets/create"
+        options={{
+          href: null,
+          title: 'Assets',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'information-circle' : 'information-circle-outline'} color={color} size={24}/>
+          ),
+        }}
+      /> */}
+      <Tabs.Screen
+        name="monitoring"
+        options={{
+         
+          title: 'Remote',
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'information-circle' : 'information-circle-outline'} color={color} size={24}/>
           ),

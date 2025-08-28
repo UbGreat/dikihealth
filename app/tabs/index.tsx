@@ -34,7 +34,7 @@ export default function Home() {
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.appName}>DikyHealth</Text>
-        <Text style={styles.subtitle}>Algorand-powered healthcare platform</Text>
+        <Text style={styles.subtitle}>Digital healthcare platform</Text>
       </View>
 
       {/* Primary highlight: EHR */}
@@ -56,10 +56,10 @@ export default function Home() {
 
       {/* Core modules */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Core Modules</Text>
+        <Text style={styles.sectionTitle}>Features</Text>
         <View style={styles.grid}>
           <FeatureCard
-            title="Algorand Wallet"
+            title="Wallet"
             subtitle="Manage keys & sign"
             onPress={() => router.push("/tabs/wallet")}
             leftIcon={<MaterialCommunityIcons name="wallet" size={28} color="#2563eb" />}
@@ -96,28 +96,28 @@ export default function Home() {
           <FeatureCard
             title="IoT Drone"
             subtitle="Rapid AED & meds"
-            onPress={() => router.push("/tabs/emergency/drone")}
+            onPress={() => router.push("/tabs/emergency")}
             leftIcon={<MaterialCommunityIcons name="drone" size={28} color="#2563eb" />}
             testID="drone-card"
           />
           <FeatureCard
             title="Ambulance"
             subtitle="Ground transport"
-            onPress={() => router.push("/tabs/emergency/ambulance")}
+            onPress={() => router.push("/tabs/emergency")}
             leftIcon={<MaterialCommunityIcons name="ambulance" size={28} color="#2563eb" />}
             testID="ambulance-card"
           />
           <FeatureCard
             title="Helicopter"
             subtitle="Air medevac"
-            onPress={() => router.push("/tabs/emergency/helicopter")}
+            onPress={() => router.push("/tabs/emergency")}
             leftIcon={<MaterialCommunityIcons name="helicopter" size={28} color="#2563eb" />}
             testID="helicopter-card"
           />
           <FeatureCard
             title="Private Jet"
             subtitle="Long-range medevac"
-            onPress={() => router.push("/tabs/emergency/jet")}
+            onPress={() => router.push("/tabs/emergency")}
             leftIcon={<MaterialCommunityIcons name="airplane" size={28} color="#2563eb" />}
             testID="jet-card"
           />
