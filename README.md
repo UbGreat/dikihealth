@@ -1,6 +1,6 @@
 # Welcome to dikiHealth 
 
-This is a Algorand Blockchain and IoT powered healthcare App.
+This is an Algorand Blockchain and IoT powered healthcare App.
 
 ## Features
 
