@@ -75,7 +75,7 @@ export default function Home() {
           <FeatureCard
             title="Remote Monitoring (IoT)"
             subtitle="Vitals • Wearables • Alerts"
-            onPress={() => router.push("/tabs/monitoring/index")}
+            onPress={() => router.push("/tabs/monitoring")}
             leftIcon={<Ionicons name="pulse-outline" size={28} color="#2563eb" />}
             testID="iot-card"
           />
