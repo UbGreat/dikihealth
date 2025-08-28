@@ -31,7 +31,6 @@ export default function WalletScreen() {
     console.log("Funding wallet with: ₦", fundAmount)
     setFundModalVisible(false)
     setFundAmount("")
-    // Later: integrate Flutterwave / Paystack API here
     alert(`₦${fundAmount} funding request sent!`)
   }
 
@@ -50,7 +49,16 @@ export default function WalletScreen() {
           {/* Wallet Info */}
           <View style={styles.card}>
             <Text style={styles.walletLabel}>Wallet Address</Text>
-            <Text style={styles.walletAddress}>{walletInfo.address}</Text>
+            <View style={styles.addressRow}>
+              <Text style={styles.walletAddress}>{walletInfo.address}</Text>
+              <TouchableOpacity
+                style={styles.fundSmallBtn}
+                onPress={() => setFundModalVisible(true)}
+              >
+                <Ionicons name="cash" size={16} color="#fff" />
+                <Text style={styles.fundSmallBtnText}>Fund Wallet</Text>
+              </TouchableOpacity>
+            </View>
             <Text style={styles.balance}>{walletInfo.balance}</Text>
           </View>
 
@@ -86,13 +94,6 @@ export default function WalletScreen() {
             <TouchableOpacity style={styles.actionBtn}>
               <Ionicons name="refresh-circle" size={22} color="#fff" />
               <Text style={styles.actionText}>Swap</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.actionBtn, { backgroundColor: "#059669" }]}
-              onPress={() => setFundModalVisible(true)}
-            >
-              <Ionicons name="cash" size={22} color="#fff" />
-              <Text style={styles.actionText}>Fund</Text>
             </TouchableOpacity>
           </View>
 
@@ -168,8 +169,19 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   walletLabel: { fontSize: 14, color: "#6b7280" },
-  walletAddress: { fontSize: 13, fontWeight: "600", color: "#2563eb", marginVertical: 4 },
-  balance: { fontSize: 18, fontWeight: "700", color: "#111827" },
+  addressRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  walletAddress: { fontSize: 13, fontWeight: "600", color: "#2563eb" },
+  balance: { fontSize: 18, fontWeight: "700", color: "#111827", marginTop: 8 },
+
+  fundSmallBtn: {
+    flexDirection: "row",
+    backgroundColor: "#059669",
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  fundSmallBtnText: { color: "#fff", fontSize: 12, fontWeight: "600", marginLeft: 4 },
 
   sectionTitle: { fontSize: 16, fontWeight: "600", marginBottom: 10, color: "#111827" },
   assetItem: {
