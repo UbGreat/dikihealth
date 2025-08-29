@@ -1,5 +1,6 @@
 // app/assets.tsx
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons"
+import { router } from "expo-router"
 import React, { useState } from "react"
 import {
     FlatList,
@@ -58,10 +59,11 @@ export default function AssetsScreen() {
       <View style={styles.actionsRow}>
         <TouchableOpacity
           style={styles.actionBtn}
-          onPress={() => {
-            setAssetAction("create")
-            setModalVisible(true)
-          }}
+          onPress={() => router.push("/tabs/assets/create")}
+        //   onPress={() => {
+        //     setAssetAction("create")
+        //     setModalVisible(true)
+        //   }}
         >
           <Ionicons name="add-circle" size={22} color="#fff" />
           <Text style={styles.actionText}>Create</Text>
@@ -69,10 +71,11 @@ export default function AssetsScreen() {
 
         <TouchableOpacity
           style={styles.actionBtn}
-          onPress={() => {
-            setAssetAction("optin")
-            setModalVisible(true)
-          }}
+          onPress={() => router.push("/tabs/assets/optin")}
+        //   onPress={() => {
+        //     setAssetAction("optin")
+        //     setModalVisible(true)
+        //   }}
         >
           <Ionicons name="log-in" size={22} color="#fff" />
           <Text style={styles.actionText}>Opt-in</Text>

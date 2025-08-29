@@ -1,5 +1,6 @@
 // app/ehr.tsx
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons"
+import { router } from "expo-router"
 import React from "react"
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 
@@ -80,7 +81,7 @@ export default function EHRScreen() {
       </View>
 
       {/* Actions */}
-      <TouchableOpacity style={styles.primaryBtn}>
+      <TouchableOpacity style={styles.primaryBtn} onPress={() => router.push("/tabs/ehr/create")}>
         <Text style={styles.primaryBtnText}>Add New Record</Text>
       </TouchableOpacity>
     </ScrollView>

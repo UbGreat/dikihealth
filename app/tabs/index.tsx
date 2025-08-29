@@ -34,6 +34,8 @@ export default function Home() {
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.appName}>DikyHealth</Text>
+      
+
         <Text style={styles.subtitle}>Digital healthcare platform</Text>
       </View>
 
