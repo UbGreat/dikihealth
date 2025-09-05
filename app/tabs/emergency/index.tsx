@@ -2,14 +2,15 @@
 import { FontAwesome5, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons"
 import React, { useState } from "react"
 import {
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native"
+import Header from "../../../src/components/header"
 
 export default function EmergencyScreen() {
   const [location, setLocation] = useState("6.5244° N, 3.3792° E") // dummy Lagos coords
@@ -26,128 +27,120 @@ export default function EmergencyScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Emergency Response</Text>
-      <Text style={styles.subtitle}>Quick access for urgent healthcare needs</Text>
+    <View style={{ flex: 1 }}>
+      <Header />
+      <View style={styles.container}>
+        <Text style={styles.title}>Emergency Response</Text>
+        <Text style={styles.subtitle}>Quick access for urgent healthcare needs</Text>
 
-      {/* Big Red Emergency Button */}
-      <TouchableOpacity
-        style={styles.emergencyBtn}
-        onPress={() => {
-          setActiveType("General")
-          setVisible(true)
-        }}
-      >
-        <Ionicons name="alert-circle" size={50} color="#fff" />
-        <Text style={styles.emergencyBtnText}>Trigger Emergency</Text>
-      </TouchableOpacity>
+        {/* Big Red Emergency Button */}
+        <TouchableOpacity
+          style={styles.emergencyBtn}
+          onPress={() => {
+            setActiveType("General")
+            setVisible(true)
+          }}
+        >
+          <Ionicons name="alert-circle" size={50} color="#fff" />
+          <Text style={styles.emergencyBtnText}>Trigger Emergency</Text>
+        </TouchableOpacity>
 
-      {/* Scrollable Options */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={{ marginBottom: 20 }}
-      >
-        <View style={styles.optionsRow}>
-          <TouchableOpacity
-            style={styles.optionCard}
-            onPress={() => {
-              setActiveType("Ambulance")
-              setVisible(true)
-            }}
-          >
-            <MaterialCommunityIcons name="ambulance" size={36} color="#ef4444" />
-            <Text style={styles.optionText}>Ambulance</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.optionCard}
-            onPress={() => {
-              setActiveType("Drone")
-              setVisible(true)
-            }}
-          >
-            <MaterialCommunityIcons name="drone" size={36} color="#2563eb" />
-            <Text style={styles.optionText}>Drone</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.optionCard}
-            onPress={() => {
-              setActiveType("Helicopter")
-              setVisible(true)
-            }}
-          >
-            <FontAwesome5 name="helicopter" size={34} color="#f59e0b" />
-            <Text style={styles.optionText}>Helicopter</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.optionCard}
-            onPress={() => {
-              setActiveType("Private Jet")
-              setVisible(true)
-            }}
-          >
-            <FontAwesome5 name="plane" size={34} color="#9333ea" />
-            <Text style={styles.optionText}>Private Jet</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.optionCard}
-            onPress={() => {
-              setActiveType("Health Record")
-              setVisible(true)
-            }}
-          >
-            <Ionicons name="document-text" size={34} color="#10b981" />
-            <Text style={styles.optionText}>Health Record</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-
-      {/* Active Status */}
-      <View style={styles.statusCard}>
-        <Ionicons name="location" size={18} color="#2563eb" />
-        <Text style={styles.statusText}>Live Location: {location}</Text>
-      </View>
-
-      {/* Modal for details */}
-      <Modal
-        visible={visible}
-        transparent={true}
-        animationType="slide"
-        onRequestClose={() => setVisible(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalCard}>
-            <Text style={styles.modalTitle}>{activeType} Emergency</Text>
-            <Text style={styles.modalSubtitle}>
-              Provide short info (e.g., chest pain, accident, bleeding)
-            </Text>
-
-            <TextInput
-              style={styles.input}
-              placeholder="Enter details..."
-              value={details}
-              onChangeText={setDetails}
-            />
-
-            <TouchableOpacity style={styles.modalBtn} onPress={triggerEmergency}>
-              <Text style={styles.modalBtnText}>Send Emergency Request</Text>
+        {/* Scrollable Options */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{ marginBottom: 20 }}
+        >
+          <View style={styles.optionsRow}>
+            <TouchableOpacity
+              style={styles.optionCard}
+              onPress={() => {
+                setActiveType("Ambulance")
+                setVisible(true)
+              }}
+            >
+              <MaterialCommunityIcons name="ambulance" size={36} color="#ef4444" />
+              <Text style={styles.optionText}>Ambulance</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.modalBtn, { backgroundColor: "#e5e7eb" }]}
-              onPress={() => setVisible(false)}
+              style={styles.optionCard}
+              onPress={() => {
+                setActiveType("Drone")
+                setVisible(true)
+              }}
             >
-              <Text style={[styles.modalBtnText, { color: "#111827" }]}>
-                Cancel
-              </Text>
+              <MaterialCommunityIcons name="drone" size={36} color="#2563eb" />
+              <Text style={styles.optionText}>Drone</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.optionCard}
+              onPress={() => {
+                setActiveType("Helicopter")
+                setVisible(true)
+              }}
+            >
+              <FontAwesome5 name="helicopter" size={34} color="#f59e0b" />
+              <Text style={styles.optionText}>Helicopter</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.optionCard}
+              onPress={() => {
+                setActiveType("Private Jet")
+                setVisible(true)
+              }}
+            >
+              <FontAwesome5 name="plane" size={34} color="#9333ea" />
+              <Text style={styles.optionText}>Private Jet</Text>
             </TouchableOpacity>
           </View>
+        </ScrollView>
+
+        {/* Active Status */}
+        <View style={styles.statusCard}>
+          <Ionicons name="location" size={18} color="#2563eb" />
+          <Text style={styles.statusText}>Live Location: {location}</Text>
         </View>
-      </Modal>
+
+        {/* Modal for details */}
+        <Modal
+          visible={visible}
+          transparent={true}
+          animationType="slide"
+          onRequestClose={() => setVisible(false)}
+        >
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalCard}>
+              <Text style={styles.modalTitle}>{activeType} Emergency</Text>
+              <Text style={styles.modalSubtitle}>
+                Provide short info (e.g., chest pain, accident, bleeding)
+              </Text>
+
+              <TextInput
+                style={styles.input}
+                placeholder="Enter details..."
+                value={details}
+                onChangeText={setDetails}
+              />
+
+              <TouchableOpacity style={styles.modalBtn} onPress={triggerEmergency}>
+                <Text style={styles.modalBtnText}>Send Emergency Request</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.modalBtn, { backgroundColor: "#e5e7eb" }]}
+                onPress={() => setVisible(false)}
+              >
+                <Text style={[styles.modalBtnText, { color: "#111827" }]}>
+                  Cancel
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      </View>
     </View>
   )
 }

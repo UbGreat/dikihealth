@@ -1,10 +1,17 @@
 import { useRouter } from "expo-router"
 import {
-    createUserWithEmailAndPassword,
-    signInWithPopup
+  createUserWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth"
 import React, { useState } from "react"
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import {
+  Alert,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native"
 import { auth, googleProvider } from "../../firebaseConfig"
 
 export default function Signup() {
@@ -19,7 +26,11 @@ export default function Signup() {
       Alert.alert("Success", "Account created successfully!")
       router.replace("/(auth)/login")
     } catch (error: any) {
-      Alert.alert("Error", error.message)
+      if (error.code === "auth/email-already-in-use") {
+        Alert.alert("Already Registered", "This email is already signed up. Please log in instead.")
+      } else {
+        Alert.alert("Error", error.message)
+      }
     }
   }
 
@@ -30,7 +41,11 @@ export default function Signup() {
       Alert.alert("Success", "Signed up with Google!")
       router.replace("/(auth)/login")
     } catch (error: any) {
-      Alert.alert("Error", error.message)
+      if (error.code === "auth/account-exists-with-different-credential") {
+        Alert.alert("Already Registered", "This account already exists. Please log in.")
+      } else {
+        Alert.alert("Error", error.message)
+      }
     }
   }
 

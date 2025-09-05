@@ -1,14 +1,16 @@
 // screens/AssetDetailScreen.tsx
+import { Stack } from "expo-router"
 import React, { useState } from "react"
 import {
-    Alert,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native"
+import Header from "../../../src/components/header"
 
 interface AssetDetailScreenProps {
   route: any
@@ -48,6 +50,9 @@ export default function AssetDetailScreen({ route }: AssetDetailScreenProps) {
   }
 
   return (
+    <View style={{ flex: 1 }}>
+       <Stack.Screen options={{ headerShown: false }} />
+      <Header />
     <ScrollView style={styles.container}>
       {/* Asset Image */}
       <Image source={{ uri: asset.image }} style={styles.assetImage} />
@@ -79,6 +84,7 @@ export default function AssetDetailScreen({ route }: AssetDetailScreenProps) {
         </Text>
       </TouchableOpacity>
     </ScrollView>
+    </View>
   )
 }
 

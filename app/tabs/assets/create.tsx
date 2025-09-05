@@ -2,13 +2,13 @@
 import * as ImagePicker from "expo-image-picker"
 import React, { useState } from "react"
 import {
-    Alert,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity
 } from "react-native"
 
 export default function CreateAssetScreen() {
@@ -40,6 +40,7 @@ export default function CreateAssetScreen() {
       Alert.alert("Error", "Please fill all required fields")
       return
     }
+    
 
     console.log("Creating ASA:", {
       assetName,

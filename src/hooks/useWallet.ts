@@ -1,0 +1,1 @@
+// Manages wallet state (address, balance)

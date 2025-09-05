@@ -3,6 +3,7 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons"
 import { useRouter } from "expo-router"
 import React from "react"
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import Header from "../../src/components/header"
 
 
 type CardProps = {
@@ -31,6 +32,8 @@ export default function Home() {
   const router = useRouter()
 
   return (
+  <View style={{ flex: 1 }}>
+      <Header />
     <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 40 }}>
       {/* Header */}
       <View style={styles.header}>
@@ -144,6 +147,7 @@ export default function Home() {
         </View>
       </TouchableOpacity>
     </ScrollView>
+    </View>
   )
 }
 

@@ -3,18 +3,22 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons"
 import { router } from "expo-router"
 import React, { useState } from "react"
 import {
-    FlatList,
-    Modal,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  FlatList,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native"
+import Header from "../../../src/components/header"
 
 export default function AssetsScreen() {
   const [modalVisible, setModalVisible] = useState(false)
-  const [assetAction, setAssetAction] = useState<"create" | "optin" | "buy" | "lease" | "delete" | null>(null)
+  const [assetAction, setAssetAction] = useState<
+    "create" | "optin" | "buy" | "lease" | "delete" | null
+  >(null)
   const [assetName, setAssetName] = useState("")
   const [assetAmount, setAssetAmount] = useState("")
 
@@ -30,14 +34,17 @@ export default function AssetsScreen() {
     setModalVisible(false)
     setAssetName("")
     setAssetAmount("")
-    // Later: connect with Algorand SDK
     alert(`${assetAction?.toUpperCase()} request submitted!`)
   }
 
   return (
-    <View style={styles.container}>
+    <view>
+    <ScrollView style={styles.container}>
+      
       <Text style={styles.title}>Healthcare Assets</Text>
-      <Text style={styles.subtitle}>Manage Algorand ASA tokens for healthcare infrastructure</Text>
+      <Text style={styles.subtitle}>
+        Manage Algorand ASA tokens for healthcare infrastructure
+      </Text>
 
       {/* Assets List */}
       <FlatList
@@ -45,7 +52,11 @@ export default function AssetsScreen() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.assetCard}>
-            <MaterialCommunityIcons name="hospital-building" size={28} color="#2563eb" />
+            <MaterialCommunityIcons
+              name="hospital-building"
+              size={28}
+              color="#2563eb"
+            />
             <View style={{ flex: 1, marginLeft: 12 }}>
               <Text style={styles.assetName}>{item.name}</Text>
               <Text style={styles.assetUnit}>{item.unit}</Text>
@@ -56,63 +67,62 @@ export default function AssetsScreen() {
       />
 
       {/* Actions */}
-      <View style={styles.actionsRow}>
-        <TouchableOpacity
-          style={styles.actionBtn}
-          onPress={() => router.push("/tabs/assets/create")}
-        //   onPress={() => {
-        //     setAssetAction("create")
-        //     setModalVisible(true)
-        //   }}
+      <View style={{ flex: 1 }}>
+        
+        <ScrollView
+          horizontal={false}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.actionsRow} // ✅ FIX applied here
         >
-          <Ionicons name="add-circle" size={22} color="#fff" />
-          <Text style={styles.actionText}>Create</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionBtn}
+            onPress={() => router.push("/tabs/assets/create")}
+          >
+            <Ionicons name="add-circle" size={22} color="#fff" />
+            <Text style={styles.actionText}>Create</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.actionBtn}
-          onPress={() => router.push("/tabs/assets/optin")}
-        //   onPress={() => {
-        //     setAssetAction("optin")
-        //     setModalVisible(true)
-        //   }}
-        >
-          <Ionicons name="log-in" size={22} color="#fff" />
-          <Text style={styles.actionText}>Opt-in</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionBtn}
+            onPress={() => router.push("/tabs/assets/optin")}
+          >
+            <Ionicons name="log-in" size={22} color="#fff" />
+            <Text style={styles.actionText}>Opt-in</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.actionBtn}
-          onPress={() => {
-            setAssetAction("buy")
-            setModalVisible(true)
-          }}
-        >
-          <Ionicons name="cart" size={22} color="#fff" />
-          <Text style={styles.actionText}>Buy</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionBtn}
+            onPress={() => {
+              setAssetAction("buy")
+              setModalVisible(true)
+            }}
+          >
+            <Ionicons name="cart" size={22} color="#fff" />
+            <Text style={styles.actionText}>Buy</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.actionBtn}
-          onPress={() => {
-            setAssetAction("lease")
-            setModalVisible(true)
-          }}
-        >
-          <Ionicons name="car" size={22} color="#fff" />
-          <Text style={styles.actionText}>Lease</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionBtn}
+            onPress={() => {
+              setAssetAction("lease")
+              setModalVisible(true)
+            }}
+          >
+            <Ionicons name="car" size={22} color="#fff" />
+            <Text style={styles.actionText}>Lease</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={[styles.actionBtn, { backgroundColor: "#dc2626" }]}
-          onPress={() => {
-            setAssetAction("delete")
-            setModalVisible(true)
-          }}
-        >
-          <Ionicons name="trash" size={22} color="#fff" />
-          <Text style={styles.actionText}>Delete</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.actionBtn, { backgroundColor: "#dc2626" }]}
+            onPress={() => {
+              setAssetAction("delete")
+              setModalVisible(true)
+            }}
+          >
+            <Ionicons name="trash" size={22} color="#fff" />
+            <Text style={styles.actionText}>Delete</Text>
+          </TouchableOpacity>
+        </ScrollView>
       </View>
 
       {/* Modal for Asset Actions */}
@@ -152,11 +162,14 @@ export default function AssetsScreen() {
               style={[styles.modalBtn, { backgroundColor: "#e5e7eb" }]}
               onPress={() => setModalVisible(false)}
             >
-              <Text style={[styles.modalBtnText, { color: "#111827" }]}>Cancel</Text>
+              <Text style={[styles.modalBtnText, { color: "#111827" }]}>
+                Cancel
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
+      </ScrollView>
     </View>
   )
 }
@@ -188,6 +201,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     marginTop: 20,
+    paddingBottom: 20,
   },
   actionBtn: {
     backgroundColor: "#2563eb",
@@ -200,7 +214,6 @@ const styles = StyleSheet.create({
   },
   actionText: { color: "#fff", marginTop: 4, fontSize: 12, fontWeight: "600" },
 
-  // Modal
   modalOverlay: {
     flex: 1,
     justifyContent: "center",

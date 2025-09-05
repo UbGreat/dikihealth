@@ -2,17 +2,19 @@
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons"
 import React, { useEffect, useRef, useState } from "react"
 import {
-    ActivityIndicator,
-    Alert,
-    FlatList,
-    Modal,
-    SafeAreaView,
-    StyleSheet,
-    Switch,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  Modal,
+  SafeAreaView,
+  StyleSheet,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native"
+
+import Header from "../../../src/components/header"
 
 // ---------- CONFIG ----------
 const WS_URL = "" // e.g. "wss://your-iot-backend.example/ws" — leave empty to use mock data
@@ -260,119 +262,124 @@ export default function RemoteMonitoringScreen() {
   const onlineCount = devices.filter((d) => d.status === "online").length
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.headerRow}>
-        <Text style={styles.title}>Remote Health Monitoring</Text>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={styles.smallText}>
-            {onlineCount}/{deviceCount} online
-          </Text>
+    
+     <View style={{ flex: 1 }}>
+       {/* <Stack.Screen options={{ headerShown: false }} /> */}
+      <Header />
+      <SafeAreaView style={styles.container}>
+        <View style={styles.headerRow}>
+          <Text style={styles.title}>Remote Health Monitoring</Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text style={styles.smallText}>
+              {onlineCount}/{deviceCount} online
+            </Text>
+            <TouchableOpacity
+              style={styles.mockToggle}
+              onPress={() => {
+                setUseMock((s) => !s)
+                Alert.alert("Data Source", useMock ? "Switching to real WS (if configured)" : "Using mock data")
+              }}
+            >
+              <Text style={styles.mockToggleText}>{useMock ? "Mock" : "WS"}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {!connected && !useMock ? (
+          <View style={styles.wsStatus}>
+            <ActivityIndicator />
+            <Text style={{ marginLeft: 8 }}>Connecting to WebSocket...</Text>
+          </View>
+        ) : null}
+
+        <FlatList
+          data={devices}
+          renderItem={renderDevice}
+          keyExtractor={(it) => it.id}
+          contentContainerStyle={{ paddingBottom: 120 }}
+          ListEmptyComponent={<Text style={{ textAlign: "center", marginTop: 20 }}>No devices found</Text>}
+        />
+
+        <View style={styles.footerActions}>
+          <TouchableOpacity style={styles.primaryBtn} onPress={handlePairDevice}>
+            <Ionicons name="add" size={18} color="#fff" />
+            <Text style={styles.primaryBtnText}>Pair Device</Text>
+          </TouchableOpacity>
+
           <TouchableOpacity
-            style={styles.mockToggle}
-            onPress={() => {
-              setUseMock((s) => !s)
-              Alert.alert("Data Source", useMock ? "Switching to real WS (if configured)" : "Using mock data")
-            }}
+            style={[styles.primaryBtn, { backgroundColor: "#059669" }]}
+            onPress={() => Alert.alert("Export", "Export telemetry (CSV/JSON) - implement backend export")}
           >
-            <Text style={styles.mockToggleText}>{useMock ? "Mock" : "WS"}</Text>
+            <Ionicons name="download" size={18} color="#fff" />
+            <Text style={styles.primaryBtnText}>Export Data</Text>
           </TouchableOpacity>
         </View>
-      </View>
 
-      {!connected && !useMock ? (
-        <View style={styles.wsStatus}>
-          <ActivityIndicator />
-          <Text style={{ marginLeft: 8 }}>Connecting to WebSocket...</Text>
-        </View>
-      ) : null}
-
-      <FlatList
-        data={devices}
-        renderItem={renderDevice}
-        keyExtractor={(it) => it.id}
-        contentContainerStyle={{ paddingBottom: 120 }}
-        ListEmptyComponent={<Text style={{ textAlign: "center", marginTop: 20 }}>No devices found</Text>}
-      />
-
-      <View style={styles.footerActions}>
-        <TouchableOpacity style={styles.primaryBtn} onPress={handlePairDevice}>
-          <Ionicons name="add" size={18} color="#fff" />
-          <Text style={styles.primaryBtnText}>Pair Device</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.primaryBtn, { backgroundColor: "#059669" }]}
-          onPress={() => Alert.alert("Export", "Export telemetry (CSV/JSON) - implement backend export")}
-        >
-          <Ionicons name="download" size={18} color="#fff" />
-          <Text style={styles.primaryBtnText}>Export Data</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Device Detail Modal */}
-      <Modal visible={!!selectedDevice} animationType="slide" onRequestClose={() => setSelectedDevice(null)}>
-        {selectedDevice && (
-          <SafeAreaView style={styles.modalContainer}>
-            <View style={styles.modalHeader}>
-              <TouchableOpacity onPress={() => setSelectedDevice(null)}>
-                <Ionicons name="chevron-back" size={28} color="#111827" />
-              </TouchableOpacity>
-              <Text style={styles.modalTitle}>{selectedDevice.name}</Text>
-              <View style={{ width: 28 }} />
-            </View>
-
-            <View style={styles.modalBody}>
-              <Text style={styles.sectionTitle}>Latest Vitals</Text>
-              {selectedDevice.vitals.length === 0 ? (
-                <Text style={{ color: "#6b7280" }}>No telemetry yet</Text>
-              ) : (
-                selectedDevice.vitals
-                  .slice()
-                  .reverse()
-                  .slice(0, 8)
-                  .map((v, i) => (
-                    <View key={i} style={styles.vitalRow}>
-                      <Text style={styles.vitalTs}>{new Date(v.ts).toLocaleTimeString()}</Text>
-                      <Text style={styles.vitalText}>HR: {v.heartRate ?? "-"} bpm</Text>
-                      <Text style={styles.vitalText}>SpO₂: {v.spo2 ?? "-"}%</Text>
-                      <Text style={styles.vitalText}>T: {v.temperature ?? "-"}°C</Text>
-                    </View>
-                  ))
-              )}
-
-              <View style={styles.modalActions}>
-                <View style={styles.switchRow}>
-                  <Text style={{ color: "#111827", fontWeight: "600" }}>Mute Alerts</Text>
-                  <Switch
-                    value={selectedDevice.muted}
-                    onValueChange={() => {
-                      handleToggleMute(selectedDevice.id)
-                      // update local selectedDevice too
-                      setSelectedDevice((prev) => (prev ? { ...prev, muted: !prev.muted } : prev))
-                    }}
-                  />
-                </View>
-
-                <TouchableOpacity
-                  style={[styles.primaryBtn, { alignSelf: "stretch" }]}
-                  onPress={() => Alert.alert("Telemetry", "Show live telemetry stream (implement streaming view)")}
-                >
-                  <Ionicons name="tv" size={16} color="#fff" />
-                  <Text style={styles.primaryBtnText}>View Live Telemetry</Text>
+        {/* Device Detail Modal */}
+        <Modal visible={!!selectedDevice} animationType="slide" onRequestClose={() => setSelectedDevice(null)}>
+          {selectedDevice && (
+            <SafeAreaView style={styles.modalContainer}>
+              <View style={styles.modalHeader}>
+                <TouchableOpacity onPress={() => setSelectedDevice(null)}>
+                  <Ionicons name="chevron-back" size={28} color="#111827" />
                 </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={[styles.actionOutline]}
-                  onPress={() => Alert.alert("Send Command", "Send command to device - implement RPC over MQTT/WS")}
-                >
-                  <Text style={{ color: "#2563eb", fontWeight: "600" }}>Send Remote Command</Text>
-                </TouchableOpacity>
+                <Text style={styles.modalTitle}>{selectedDevice.name}</Text>
+                <View style={{ width: 28 }} />
               </View>
-            </View>
-          </SafeAreaView>
-        )}
-      </Modal>
-    </SafeAreaView>
+
+              <View style={styles.modalBody}>
+                <Text style={styles.sectionTitle}>Latest Vitals</Text>
+                {selectedDevice.vitals.length === 0 ? (
+                  <Text style={{ color: "#6b7280" }}>No telemetry yet</Text>
+                ) : (
+                  selectedDevice.vitals
+                    .slice()
+                    .reverse()
+                    .slice(0, 8)
+                    .map((v, i) => (
+                      <View key={i} style={styles.vitalRow}>
+                        <Text style={styles.vitalTs}>{new Date(v.ts).toLocaleTimeString()}</Text>
+                        <Text style={styles.vitalText}>HR: {v.heartRate ?? "-"} bpm</Text>
+                        <Text style={styles.vitalText}>SpO₂: {v.spo2 ?? "-"}%</Text>
+                        <Text style={styles.vitalText}>T: {v.temperature ?? "-"}°C</Text>
+                      </View>
+                    ))
+                )}
+
+                <View style={styles.modalActions}>
+                  <View style={styles.switchRow}>
+                    <Text style={{ color: "#111827", fontWeight: "600" }}>Mute Alerts</Text>
+                    <Switch
+                      value={selectedDevice.muted}
+                      onValueChange={() => {
+                        handleToggleMute(selectedDevice.id)
+                        // update local selectedDevice too
+                        setSelectedDevice((prev) => (prev ? { ...prev, muted: !prev.muted } : prev))
+                      }}
+                    />
+                  </View>
+
+                  <TouchableOpacity
+                    style={[styles.primaryBtn, { alignSelf: "stretch" }]}
+                    onPress={() => Alert.alert("Telemetry", "Show live telemetry stream (implement streaming view)")}
+                  >
+                    <Ionicons name="tv" size={16} color="#fff" />
+                    <Text style={styles.primaryBtnText}>View Live Telemetry</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={[styles.actionOutline]}
+                    onPress={() => Alert.alert("Send Command", "Send command to device - implement RPC over MQTT/WS")}
+                  >
+                    <Text style={{ color: "#2563eb", fontWeight: "600" }}>Send Remote Command</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </SafeAreaView>
+          )}
+        </Modal>
+      </SafeAreaView>
+    </View>
   )
 }
 
